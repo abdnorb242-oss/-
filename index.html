@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تطبيق تعليمي</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="top-bar">
+    <button onclick="showPrivacyPolicy()">🔒 سياسة الخصوصية</button>
+    <button onclick="shareApp()">📤 مشاركة التطبيق</button>
+    <button id="settingsButton" onclick="toggleSettings()">⚙️ الإعدادات</button>
+    <button onclick="showAbout()">👨‍💻 نبذة عن المطور</button>
+  </div>
+
+  <div id="settingsMenu" class="settings-menu">
+    <button class="close-btn" onclick="closeSettings()">×</button>
+    <label for="soundToggle">🔊 تفعيل الصوت</label>
+    <label class="switch-label">
+      <input type="checkbox" id="soundToggle" onchange="toggleSound()" />
+      <span class="slider-switch"></span>
+    </label>
+    <label for="darkModeToggle">🌙 الوضع الليلي</label>
+    <label class="switch-label">
+      <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" />
+      <span class="slider-switch"></span>
+    </label>
+  </div>
+
+  <div class="main-buttons">
+    <button class="main-button glass-effect" onclick="showCharacterOptions()">👤 لعبة الشخصيات</button>
+    <button class="main-button glass-effect" onclick="showDatePopup()">📅 لعبة التواريخ</button>
+    <button class="main-button glass-effect" onclick="showTipPopup()">💡 نصيحة لك</button>
+    <button class="main-button glass-effect" onclick="showHistorySummaries()">🕰️ ملخص التاريخ</button>
+    <button class="main-button glass-effect" onclick="showGeographySummaries()">🗺️ ملخص الجغرافيا</button>
+  </div>
+
+  <div id="aboutPopup" class="popup-overlay">
+    <div class="popup-content colorful-popup">
+      <button class="close-btn" onclick="closeAbout()">×</button>
+      <h2>👨‍💻 نبذة عن المطور</h2>
+      <p>
+أنا مطور جزائري شغوف بالتقنية والتعليم، أهدف إلى إنشاء تطبيقات تعليمية بسيطة ومفيدة، تُسهل الدراسة خاصة لتلاميذ البكالوريا، دون الحاجة للإنترنت.
+
+نسعد بتفاعلكم وآرائكم لتحسين التطبيق، شاركونا رأيكم عبر صفحتنا على فيسبوك! 🌟      </p>
+      <p style="font-size: 18px;">
+        📎 صفحتنا  على الفيسبوك:<br />
+        <a href="https://www.facebook.com/profile.php?id=61577766223019" target="_blank" style="color: #007bff; text-decoration: underline;">
+          facebook.com/profile.php?id=61577766223019
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div id="characterPopup" class="popup-overlay">
+    <div class="popup-content colorful-popup">
+      <button class="close-btn" onclick="closeCharacterPopup()">×</button>
+      <h2>اختر الموضوع</h2>
+      <div class="popup-buttons">
+        <button onclick="showColdWarCharacters()">🕊️ شخصيات الحرب الباردة</button>
+        <button onclick="showAlgerianRevolutionCharacters()">⚔️ شخصيات الثورة الجزائرية</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="datePopup" class="popup-overlay">
+    <div class="popup-content colorful-popup">
+      <button class="close-btn" onclick="closeDatePopup()">×</button>
+      <h2>اختر الموضوع</h2>
+      <div class="popup-buttons">
+        <button id="cold-war-date-btn" onclick="startDateQuiz('coldwar')">🕊️ تواريخ الحرب الباردة</button>
+        <button id="algerian-revolution-date-btn" onclick="startDateQuiz('algerianRevolution')">⚔️ تواريخ الثورة الجزائرية</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quizPopup" class="popup-overlay">
+    <div class="popup-content quiz-popup">
+      <button class="close-btn" onclick="closeQuiz()">×</button>
+      <h2 id="quiz-title">👤 من أنا؟</h2>
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <div class="timer-visual">
+        <div id="timeLabel">الوقت المتبقي: <span id="timeCount">15</span> ثانية</div>
+        <div class="timer-bar">
+          <div id="timerFill"></div>
+        </div>
+      </div>
+      <div id="quiz-question"></div>
+      <div id="quiz-options"></div>
+      <div id="quiz-feedback"></div>
+      <button class="next-btn" onclick="nextQuestion()">➡️ السؤال التالي</button>
+      <button class="retry-btn" onclick="restartQuiz()">🔄 إعادة المحاولة</button>
+    </div>
+  </div>
+
+  <div id="tipPopup" class="popup-overlay">
+    <div class="popup-content tip-popup">
+      <button class="close-btn" onclick="closeTipPopup()">×</button>
+      <h2 id="tip-title">💡 نصيحة لك</h2>
+      <p>مادة التاريخ والجغرافيا تحتاج إلى فهم عميق أكثر من الحفظ. لا تضغط على نفسك بحفظ كل شيء، بل افهم الأحداث، تسلسلها، وأسبابها، ثم راجعها بطرق ممتعة كتكرار الأسئلة أو استخدام هذا التطبيق.</p>
+      <p><strong>"الفهم هو الطريق الأقصر إلى التذكّر، والعلم لا يُحفظ، بل يُدرك."</strong></p>
+      <p>كما لا يحفظ لاعب الشطرنج كل حركة، بل يفهم هدفه ويتصرف بذكاء…<br />افهم، اربط، وكرّر، وستصل.</p>
+      <p><strong>🔖 من مطور التطبيق:</strong> تذكّر أن كل خطوة تقرّبك من النجاح… فقط واصل.</p>
+    </div>
+  </div>
+
+  <div id="privacyPopup" class="popup-overlay">
+    <div class="popup-content privacy-popup">
+      <button class="close-btn" onclick="closePrivacyPopup()">×</button>
+      <h2>🔒 سياسة الخصوصية</h2>
+      <div class="privacy-content">
+        <p>نحن نحترم خصوصيتك ونلتزم بحمايتها. تهدف هذه السياسة إلى شرح كيفية جمع واستخدام وحماية معلومات المستخدمين في تطبيقنا.</p>
+        <h3>📌 المعلومات التي نجمعها:</h3>
+        <p>لا نقوم بجمع أي بيانات شخصية من المستخدمين بشكل مباشر.</p>
+        <p>قد يستخدم التطبيق خدمات طرف ثالث مثل Google AdMob لعرض الإعلانات، والتي قد تجمع معلومات غير شخصية (مثل نوع الجهاز، البلد، رقم الإعلانات المميز) لتحسين جودة الإعلانات.</p>
+        <h3>📌 استخدام المعلومات:</h3>
+        <p>تُستخدم البيانات غير الشخصية فقط لأغراض إحصائية وتحليلية لتحسين تجربة المستخدم.</p>
+        <p>لا نقوم ببيع أو مشاركة أي معلومات مع جهات خارجية.</p>
+        <h3>📌 الإعلانات:</h3>
+        <p>قد يعرض التطبيق إعلانات من شركاء مثل Google AdMob.</p>
+        <p>هذه الإعلانات قد تستخدم أدوات تعقب لعرض محتوى أكثر ملاءمة لك.</p>
+        <h3>📌 حماية البيانات:</h3>
+        <p>نحن نستخدم وسائل آمنة لحماية بيانات المستخدمين وضمان عدم إساءة استخدامها.</p>
+        <h3>📌 موافقتك:</h3>
+        <p>باستخدامك لهذا التطبيق، فإنك توافق على سياسة الخصوصية هذه.</p>
+        <h3>📌 التحديثات:</h3>
+        <p>قد نقوم بتحديث سياسة الخصوصية من حين لآخر، وسنقوم بإعلامك في حالة وجود تغييرات هامة.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="historySummariesPopup" class="popup-overlay">
+    <div class="popup-content glass-popup modern-glass">
+      <button class="close-btn" onclick="closeHistorySummaries()">×</button>
+      <h2>🕰️ ملخص التاريخ</h2>
+      <p class="subtitle">اختر الموضوع الذي تريد مراجعته:</p>
+      <div class="history-cards">
+        <div class="history-card cold-war-card" onclick="showColdWarSummary()">
+          <div class="card-overlay"></div>
+          <h3>الحرب الباردة</h3>
+          <div class="card-icon">🕊️</div>
+          <p>الصراع بين المعسكرين الشرقي والغربي</p>
+        </div>
+        <div class="history-card revolution-card" onclick="showAlgerianRevolutionSummary()">
+          <div class="card-overlay"></div>
+          <h3>الثورة الجزائرية</h3>
+          <div class="card-icon">⚔️</div>
+          <p>ثورة التحرير ضد الاستعمار الفرنسي</p>
+        </div>
+      </div>
+      <button class="secondary-close-btn" onclick="closeHistorySummaries()">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="geographySummariesPopup" class="popup-overlay">
+    <div class="popup-content glass-popup modern-glass">
+      <button class="close-btn" onclick="closeGeographySummaries()">×</button>
+      <h2>🗺️ ملخص الجغرافيا</h2>
+      <p class="subtitle">اختر الموضوع الذي تريد مراجعته:</p>
+      <div class="history-cards">
+        <div class="history-card world-geography-card" onclick="showWorldGeographySummary()">
+          <div class="card-overlay"></div>
+          <h3>الجغرافيا العالمية</h3>
+          <div class="card-icon">🌍</div>
+          <p>تعرف على القارات والمحيطات</p>
+        </div>
+        <div class="history-card algerian-geography-card" onclick="showAlgerianGeographySummary()">
+          <div class="card-overlay"></div>
+          <h3>جغرافيا الجزائر</h3>
+          <div class="card-icon">🇩🇿</div>
+          <p>اكتشف جغرافيا الجزائر</p>
+        </div>
+      </div>
+      <button class="secondary-close-btn" onclick="closeGeographySummaries()">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="coldWarSummaryPopup" class="popup-overlay">
+    <div class="popup-content cold-war-summary modern-glass">
+      <button class="close-btn" onclick="closeColdWarSummary()">×</button>
+      <div class="summary-content">
+        <h3>ملخص الحرب الباردة</h3>
+        <p>سيتم إضافة ملخص لاحقًا</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="algerianRevolutionSummaryPopup" class="popup-overlay">
+    <div class="popup-content revolution-summary modern-glass">
+      <button class="close-btn" onclick="closeAlgerianRevolutionSummary()">×</button>
+      <div class="summary-content">
+        <h3>ملخص الثورة الجزائرية</h3>
+        <p>سيتم إضافة ملخص لاحقًا</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="worldGeographySummaryPopup" class="popup-overlay">
+    <div class="popup-content world-geography-summary modern-glass">
+      <button class="close-btn" onclick="closeWorldGeographySummary()">×</button>
+      <div class="summary-content">
+        <h3>ملخص الجغرافيا العالمية</h3>
+        <p>سيتم إضافة ملخص لاحقًا</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="algerianGeographySummaryPopup" class="popup-overlay">
+    <div class="popup-content algerian-geography-summary modern-glass">
+      <button class="close-btn" onclick="closeAlgerianGeographySummary()">×</button>
+      <div class="summary-content">
+        <h3>ملخص جغرافيا الجزائر</h3>
+        <p>سيتم إضافة ملخص لاحقًا</p>
+      </div>
+    </div>
+  </div>
+
+  <audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/1513/1513.wav"></audio>
+  <audio id="correctSound" src="https://assets.mixkit.co/active_storage/sfx/3200/3200.wav"></audio>
+  <audio id="wrongSound" src="https://assets.mixkit.co/active_storage/sfx/2029/2029.wav"></audio>
+  <audio id="rainSound" src="rain_thunder.mp3" loop></audio>
+
+  <div id="countdownTimer">
+    <svg>
+      <circle class="progress-ring" cx="40" cy="40" r="30"></circle>
+    </svg>
+    <span class="time-text">30:00</span>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="cold-war-quiz.js"></script>
+  <script src="revolution-quiz.js"></script>
+  <script src="world-geography-quiz.js"></script>
+  <script src="algerian-geography-quiz.js"></script>
+</body>
+</html>
