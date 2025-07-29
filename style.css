@@ -3,9 +3,11 @@
   --base-font-size: 100%;
   --color-correct: #4caf50;
   --color-wrong: #f44336;
-  --color-character: #9b59b6; /* لون أرجواني للشخصيات */
-  --color-date: #2e7d32; /* لون أخضر للتواريخ */
-  --color-geography: #ff9800; /* لون برتقالي للجغرافيا */
+  --color-character: #9b59b6;
+  --color-date: #2e7d32;
+  --color-geography: #ff9800;
+  --padding-standard: 12px 20px;
+  --border-radius-standard: 20px;
 }
 
 html {
@@ -22,29 +24,26 @@ html {
 /* خلفية الوضع العادي */
 body {
   font-family: 'Cairo', sans-serif;
-  background-image: url("https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg") !important;
+  background-image: url("https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?format=webp");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  background-color: #e0e0e0; /* خلفية احتياطية */
+  background-color: #e0e0e0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 5%;
   color: #000;
-  transition: background 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   direction: rtl;
   text-align: right;
 }
 
 /* خلفية الوضع الداكن */
 body.dark-mode {
-  background-image: url("https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg") !important;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-color: #121212; /* خلفية احتياطية */
+  background-image: url("https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?format=webp");
+  background-color: #121212;
   color: #fff;
 }
 
@@ -55,14 +54,14 @@ body.dark-mode {
   right: 20px;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: #fff;
-  padding: 10px 20px;
+  padding: var(--padding-standard);
   font-family: 'Cairo', sans-serif;
   font-size: 1rem;
   font-weight: bold;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--border-radius-standard);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1001;
 }
@@ -85,21 +84,20 @@ body.dark-mode #settingsButton:hover {
 #starsDisplay {
   position: fixed;
   top: 20px;
-  right: 160px; /* تحريك النجوم أكثر إلى اليسار لتجنب التداخل مع زر الإعدادات */
+  right: 160px;
   font-family: 'Cairo', sans-serif;
   font-size: 1rem;
   font-weight: bold;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   padding: 10px 20px;
   color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1001; /* ضمان ظهور النجوم على نفس مستوى زر الإعدادات */
+  z-index: 1001;
   display: flex;
   align-items: center;
-  margin-left: 10px; /* مسافة قصيرة بين النجوم وزر الإعدادات */
+  margin-left: 10px;
 }
 
 #starsDisplay::before {
@@ -123,10 +121,9 @@ body.dark-mode #starsDisplay {
   width: 80px;
   height: 80px;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  display: none; /* مخفي افتراضيًا حتى تنتهي النجوم */
+  display: none;
   align-items: center;
   justify-content: center;
   font-family: 'Cairo', sans-serif;
@@ -138,7 +135,7 @@ body.dark-mode #starsDisplay {
 }
 
 #countdownTimer.active {
-  display: flex; /* يظهر عندما تنتهي النجوم */
+  display: flex;
 }
 
 #countdownTimer .time-text {
@@ -187,7 +184,7 @@ body.dark-mode #countdownTimer .progress-ring {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
   width: 100%;
   max-width: 300px;
@@ -222,7 +219,7 @@ body.dark-mode #quiz-options button.ad-button:hover {
   padding: 10px 15px;
   border-radius: 20px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
   font-size: 14px;
   font-family: 'Cairo', sans-serif;
 }
@@ -246,7 +243,6 @@ body.dark-mode .top-bar button:hover {
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(30, 30, 30, 0.95);
-  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 20px;
   border-radius: 15px;
@@ -280,7 +276,7 @@ body.dark-mode #settingsMenu {
   padding: 4px 10px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .close-btn:hover {
@@ -322,8 +318,6 @@ body.dark-mode .close-btn:hover {
   align-items: center;
   justify-content: space-between;
   font-size: 0.95rem;
-  backdrop-filter: blur(6px);
-  color: inherit;
   border: 1px solid rgba(255, 255, 255, 0.15);
   transition: background-color 0.3s ease;
   width: 100%;
@@ -341,7 +335,7 @@ body.dark-mode .close-btn:hover {
   border-radius: 20px;
   position: relative;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
   flex-shrink: 0;
 }
 
@@ -354,7 +348,7 @@ body.dark-mode .close-btn:hover {
   border-radius: 50%;
   top: 1px;
   left: 1px;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .switch-label input:checked + .slider-switch {
@@ -413,10 +407,9 @@ input[type="range"]:hover::-webkit-slider-thumb {
   font-size: 1rem;
   font-weight: bold;
   border-radius: 25px;
-  backdrop-filter: blur(6px);
   color: #fff;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   font-family: 'Cairo', sans-serif;
 }
@@ -435,10 +428,9 @@ body.dark-mode .main-button:hover {
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* تأثير زجاجي */
+//* تأثير زجاجي */
 .glass-effect {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -455,18 +447,21 @@ body.dark-mode .glass-effect {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.4s ease-in-out;
+  transition: opacity 0.4s ease;
+}
+
+.popup-overlay.active {
+  display: flex;
+  opacity: 1;
 }
 
 .popup-content {
   position: relative;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 30px 25px;
   border-radius: 20px;
@@ -485,7 +480,6 @@ body.dark-mode .popup-content {
 /* تنسيق نافذة نصيحة لك */
 .tip-popup {
   background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(255, 87, 34, 0.2));
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 140, 0, 0.3);
   border-radius: 25px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
@@ -502,8 +496,6 @@ body.dark-mode .tip-popup {
   color: #fff;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   background: linear-gradient(270deg, #ff8c00, #ff5722);
-  background-size: 200% 200%;
-  animation: gradientShift 5s ease infinite;
   padding: 12px 20px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -522,7 +514,6 @@ body.dark-mode .tip-popup {
 /* النوافذ الملونة */
 .colorful-popup {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(0, 188, 212, 0.15));
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 25px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
@@ -551,8 +542,8 @@ body.dark-mode .colorful-popup {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5032px 15px rgba(0, 188, 212, 0.4);
   width: 100%;
   max-width: 300px;
   font-family: 'Cairo', sans-serif;
@@ -577,7 +568,7 @@ body.dark-mode .popup-buttons button:hover {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: linear-gradient(145deg, #00bcd4, #0097a7);
+  background: var(--summary-gradient, linear-gradient(145deg, #00bcd4, #0097a7));
   color: #fff;
   border: none;
   font-size: 18px;
@@ -585,96 +576,59 @@ body.dark-mode .popup-buttons button:hover {
   padding: 4px 10px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: background 0.3s ease, transform 0.2s ease;
   z-index: 1;
 }
 
 .back-btn:hover {
-  background: linear-gradient(145deg, #00e5ff, #00acc1);
+  background: var(--summary-gradient-hover, linear-gradient(145deg, #00e5ff, #00acc1));
   transform: scale(1.1);
 }
 
 body.dark-mode .back-btn {
-  background: linear-gradient(145deg, #0288d1, #01579b);
+  background: var(--summary-gradient-dark, linear-gradient(145deg, #0288d1, #01579b));
 }
 
 body.dark-mode .back-btn:hover {
-  background: linear-gradient(145deg, #42a5f5, #1976d2);
+  background: var(--summary-gradient-dark-hover, linear-gradient(145deg, #42a5f5, #1976d2));
 }
 
 /* تخصيص زر الرجوع لكل ملخص */
-.cold-war-summary .back-btn {
-  background: linear-gradient(145deg, #42a5f5, #1976d2);
+.cold-war-summary {
+  --summary-gradient: linear-gradient(145deg, #42a5f5, #1976d2);
+  --summary-gradient-hover: linear-gradient(145deg, #64b5f6, #2196f3);
+  --summary-gradient-dark: linear-gradient(145deg, #1e88e5, #0d47a1);
+  --summary-gradient-dark-hover: linear-gradient(145deg, #42a5f5, #1976d2);
 }
 
-.cold-war-summary .back-btn:hover {
-  background: linear-gradient(145deg, #64b5f6, #2196f3);
+.revolution-summary {
+  --summary-gradient: linear-gradient(145deg, #ef5350, #d32f2f);
+  --summary-gradient-hover: linear-gradient(145deg, #f06292, #e53935);
+  --summary-gradient-dark: linear-gradient(145deg, #d32f2f, #b71c1c);
+  --summary-gradient-dark-hover: linear-gradient(145deg, #ef5350, #d32f2f);
 }
 
-body.dark-mode .cold-war-summary .back-btn {
-  background: linear-gradient(145deg, #1e88e5, #0d47a1);
+.world-geography-summary {
+  --summary-gradient: linear-gradient(145deg, #ff9800, #f57c00);
+  --summary-gradient-hover: linear-gradient(145deg, #ffb300, #ff8f00);
+  --summary-gradient-dark: linear-gradient(145deg, #ef6c00, #d84315);
+  --summary-gradient-dark-hover: linear-gradient(145deg, #ff8f00, #f57c00);
 }
 
-body.dark-mode .cold-war-summary .back-btn:hover {
-  background: linear-gradient(145deg, #42a5f5, #1976d2);
-}
-
-.revolution-summary .back-btn {
-  background: linear-gradient(145deg, #ef5350, #d32f2f);
-}
-
-.revolution-summary .back-btn:hover {
-  background: linear-gradient(145deg, #f06292, #e53935);
-}
-
-body.dark-mode .revolution-summary .back-btn {
-  background: linear-gradient(145deg, #d32f2f, #b71c1c);
-}
-
-body.dark-mode .revolution-summary .back-btn:hover {
-  background: linear-gradient(145deg, #ef5350, #d32f2f);
-}
-
-.world-geography-summary .back-btn {
-  background: linear-gradient(145deg, #ff9800, #f57c00);
-}
-
-.world-geography-summary .back-btn:hover {
-  background: linear-gradient(145deg, #ffb300, #ff8f00);
-}
-
-body.dark-mode .world-geography-summary .back-btn {
-  background: linear-gradient(145deg, #ef6c00, #d84315);
-}
-
-body.dark-mode .world-geography-summary .back-btn:hover {
-  background: linear-gradient(145deg, #ff8f00, #f57c00);
-}
-
-.algerian-geography-summary .back-btn {
-  background: linear-gradient(145deg, #4caf50, #388e3c);
-}
-
-.algerian-geography-summary .back-btn:hover {
-  background: linear-gradient(145deg, #81c784, #4caf50);
-}
-
-body.dark-mode .algerian-geography-summary .back-btn {
-  background: linear-gradient(145deg, #388e3c, #2e7d32);
-}
-
-body.dark-mode .algerian-geography-summary .back-btn:hover {
-  background: linear-gradient(145deg, #4caf50, #388e3c);
+.algerian-geography-summary {
+  --summary-gradient: linear-gradient(145deg, #4caf50, #388e3c);
+  --summary-gradient-hover: linear-gradient(145deg, #81c784, #4caf50);
+  --summary-gradient-dark: linear-gradient(145deg, #388e3c, #2e7d32);
+  --summary-gradient-dark-hover: linear-gradient(145deg, #4caf50, #388e3c);
 }
 
 /* تنسيق الكويز */
 .quiz-popup {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(155, 89, 182, 0.2));
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 25px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .quiz-options {
@@ -686,22 +640,21 @@ body.dark-mode .algerian-geography-summary .back-btn:hover {
 
 /* تنسيق لعبة التواريخ */
 .date-quiz-popup {
-  background: linear-gradient(135deg, rgba(46, 125, 50, 0.15), rgba(76, 175, 80, 0.2)) !important;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(76, 175, 80, 0.3) !important;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.15), rgba(76, 175, 80, 0.2));
+  border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .date-quiz-popup #quiz-question {
-  background: linear-gradient(270deg, #2e7d32, #4caf50) !important;
+  background: linear-gradient(270deg, #2e7d32, #4caf50);
 }
 
 .date-quiz-popup .next-btn {
-  background: linear-gradient(135deg, #2e7d32, #4caf50) !important;
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4) !important;
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
 }
 
 .date-quiz-popup .next-btn:hover {
-  background: linear-gradient(145deg, #388e3c, #81c784) !important;
+  background: linear-gradient(145deg, #388e3c, #81c784);
 }
 
 /* تنسيق عنوان الكويز */
@@ -714,19 +667,14 @@ body.dark-mode .algerian-geography-summary .back-btn:hover {
   color: #fff;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
-  transition: all 0.3s ease;
 }
 
 .quiz-popup #quiz-title {
   background: linear-gradient(270deg, var(--color-character), #7b1fa2);
-  background-size: 200% 200%;
-  animation: gradientShift 5s ease infinite;
 }
 
 .date-quiz-popup #quiz-title {
   background: linear-gradient(270deg, var(--color-date), #4caf50);
-  background-size: 200% 200%;
-  animation: gradientShift 5s ease infinite;
 }
 
 /* تصميم السؤال */
@@ -738,25 +686,21 @@ body.dark-mode .algerian-geography-summary .back-btn:hover {
   color: #fff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   background: linear-gradient(270deg, #00bcd4, #9b59b6);
-  background-size: 200% 200%;
-  animation: gradientShift 6s ease infinite;
   border-radius: 20px;
-  backdrop-filter: blur(10px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   max-width: 90%;
 }
 
 /* الأزرار والخيارات */
 .quiz-btn {
-  padding: 12px 20px;
+  padding: var(--padding-standard);
   font-size: 1rem;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--border-radius-standard);
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
   color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 300px;
@@ -769,15 +713,13 @@ body.dark-mode .algerian-geography-summary .back-btn:hover {
 }
 
 .quiz-btn.correct {
-  background: var(--color-correct) !important;
+  background: var(--color-correct);
   box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
-  animation: flashGlow 0.6s ease-out;
 }
 
 .quiz-btn.wrong {
-  background: var(--color-wrong) !important;
+  background: var(--color-wrong);
   box-shadow: 0 0 15px rgba(244, 67, 54, 0.7);
-  animation: shakeWrong 0.4s ease-out;
 }
 
 /* ردود الفعل */
@@ -809,7 +751,7 @@ body.dark-mode .algerian-geography-summary .back-btn:hover {
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
   display: none;
   width: 100%;
@@ -832,8 +774,7 @@ body.dark-mode .next-btn:hover {
 
 /* زر إعادة المحاولة */
 .retry-btn {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.15 ‒‒);
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 14px 26px;
   font-size: 1rem;
@@ -841,7 +782,7 @@ body.dark-mode .next-btn:hover {
   border-radius: 30px;
   color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 280px;
@@ -913,57 +854,12 @@ body.dark-mode #progressBar {
   height: 100%;
   width: 100%;
   background: linear-gradient(90deg, #4caf50, #f44336);
-  background-size: 200% 100%;
   transition: width 1s linear;
-  animation: timerColorShift linear 15s forwards;
-}
-
-body.dark-mode #timerFill {
-  background: linear-gradient(90deg, #388e3c, #d32f2f);
-}
-
-/* حركة الألوان */
-@keyframes timerColorShift {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 0%; }
-}
-
-/* أنيميشن */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes flashGlow {
-  0% { box-shadow: 0 0 0px #4caf50; }
-  50% { box-shadow: 0 0 20px #4caf50; }
-  100% { box-shadow: 0 0 0px #4caf50; }
-}
-
-@keyframes shakeWrong {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 /* تنسيقات نافذة الخصوصية */
 .privacy-popup {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(33, 150, 243, 0.15));
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   max-height: 80vh;
   overflow-y: auto;
@@ -1010,19 +906,17 @@ body.dark-mode .privacy-popup::-webkit-scrollbar-thumb:hover {
 
 /* أنماط الواجهة الزجاجية العصرية */
 .modern-glass {
-  background: linear-gradient(135deg, rgba(66, 165, 245, 0.15), rgba(171, 71, 188, 0.15)) !important;
-  backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25) !important;
-  border-radius: 30px !important;
-  padding: 35px 30px !important;
-  color: #fff !important;
-  animation: fadeIn 0.4s ease-in-out;
+  background: linear-gradient(135deg, rgba(66, 165, 245, 0.15), rgba(171, 71, 188, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  padding: 35px 30px;
+  color: #fff;
 }
 
 body.dark-mode .modern-glass {
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(109, 40, 217, 0.2)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(109, 40, 217, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* تنسيقات ملخص التاريخ والجغرافيا */
@@ -1047,7 +941,7 @@ body.dark-mode .modern-glass {
   padding: 35px 30px;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   min-height: 200px;
   display: flex;
   flex-direction: column;
@@ -1092,31 +986,23 @@ body.dark-mode .modern-glass {
   opacity: 0.7;
   right: 25px;
   top: 25px;
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .cold-war-card {
   background: linear-gradient(135deg, rgba(66, 165, 245, 0.8), rgba(100, 181, 246, 0.6));
-  background-size: 200% 200%;
-  animation: gradientBG 8s ease infinite;
 }
 
 .revolution-card {
   background: linear-gradient(135deg, rgba(239, 83, 80, 0.8), rgba(229, 115, 115, 0.6));
-  background-size: 200% 200%;
-  animation: gradientBG 8s ease infinite 1s;
 }
 
 .world-geography-card {
   background: linear-gradient(135deg, rgba(255, 152, 0, 0.8), rgba(255, 193, 7, 0.6));
-  background-size: 200% 200%;
-  animation: gradientBG 8s ease infinite 2s;
 }
 
 .algerian-geography-card {
   background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(129, 199, 132, 0.6));
-  background-size: 200% 200%;
-  animation: gradientBG 8s ease infinite 3s;
 }
 
 .history-card:hover {
@@ -1135,58 +1021,50 @@ body.dark-mode .history-card {
 
 /* تصميم زجاجي لملخص الحرب الباردة */
 .cold-war-summary {
-  background: linear-gradient(135deg, rgba(66, 165, 245, 0.2), rgba(100, 181, 246, 0.2)) !important;
-  backdrop-filter: blur(22px) !important;
-  border: 1px solid rgba(100, 181, 246, 0.35) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3) !important;
-  animation: fadeIn 0.4s ease-in-out;
+  background: linear-gradient(135deg, rgba(66, 165, 245, 0.2), rgba(100, 181, 246, 0.2));
+  border: 1px solid rgba(100, 181, 246, 0.35);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .cold-war-summary {
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(109, 40, 217, 0.2)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(109, 40, 217, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* تصميم زجاجي لملخص الثورة الجزائرية */
 .revolution-summary {
-  background: linear-gradient(135deg, rgba(239, 83, 80, 0.2), rgba(229, 115, 115, 0.2)) !important;
-  backdrop-filter: blur(22px) !important;
-  border: 1px solid rgba(229, 115, 115, 0.35) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3) !important;
-  animation: fadeIn 0.4s ease-in-out;
+  background: linear-gradient(135deg, rgba(239, 83, 80, 0.2), rgba(229, 115, 115, 0.2));
+  border: 1px solid RGBA(229, 115, 115, 0.35);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .revolution-summary {
-  background: linear-gradient(135deg, rgba(183, 28, 28, 0.2), rgba(198, 40, 40, 0.2)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(135deg, rgba(183, 28, 28, 0.2), rgba(198, 40, 40, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* تصميم زجاجي لملخص الجغرافيا العالمية */
 .world-geography-summary {
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 193, 7, 0.2)) !important;
-  backdrop-filter: blur(22px) !important;
-  border: 1px solid rgba(255, 152, 0, 0.35) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3) !important;
-  animation: fadeIn 0.4s ease-in-out;
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 193, 7, 0.2));
+  border: 1px solid rgba(255, 152, 0, 0.35);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .world-geography-summary {
-  background: linear-gradient(135deg, rgba(230, 81, 0, 0.2), rgba(245, 124, 0, 0.2)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(135deg, rgba(230, 81, 0, 0.2), rgba(245, 124, 0, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* تصميم زجاجي لملخص جغرافيا الجزائر */
 .algerian-geography-summary {
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(129, 199, 132, 0.2)) !important;
-  backdrop-filter: blur(22px) !important;
-  border: 1px solid rgba(129, 199, 132, 0.35) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3) !important;
-  animation: fadeIn 0.4s ease-in-out;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(129, 199, 132, 0.2));
+  border: 1px solid rgba(129, 199, 132, 0.35);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .algerian-geography-summary {
-  background: linear-gradient(135deg, rgba(46, 125, 50, 0.2), rgba(102, 187, 106, 0.2)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.2), rgba(102, 187, 106, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* تنسيقات نافذة تفاصيل الملخص */
@@ -1241,12 +1119,12 @@ body.dark-mode .algerian-geography-summary {
 }
 
 .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00bcd4, #0097a7);
+  background: var(--summary-scrollbar, linear-gradient(180deg, #00bcd4, #0097a7));
   border-radius: 10px;
 }
 
 .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00e5ff, #00acc1);
+  background: var(--summary-scrollbar-hover, linear-gradient(180deg, #00e5ff, #00acc1));
 }
 
 body.dark-mode .summary-content::-webkit-scrollbar-track {
@@ -1254,81 +1132,44 @@ body.dark-mode .summary-content::-webkit-scrollbar-track {
 }
 
 body.dark-mode .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #0288d1, #01579b);
+  background: var(--summary-scrollbar-dark, linear-gradient(180deg, #0288d1, #01579b));
 }
 
 body.dark-mode .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #42a5f5, #1976d2);
+  background: var(--summary-scrollbar-dark-hover, linear-gradient(180deg, #42a5f5, #1976d2));
 }
 
-.cold-war-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #42a5f5, #1976d2);
+.cold-war-summary {
+  --summary-scrollbar: linear-gradient(180deg, #42a5f5, #1976d2);
+  --summary-scrollbar-hover: linear-gradient(180deg, #64b5f6, #2196f3);
+  --summary-scrollbar-dark: linear-gradient(180deg, #1e88e5, #0d47a1);
+  --summary-scrollbar-dark-hover: linear-gradient(180deg, #42a5f5, #1976d2);
 }
 
-.cold-war-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #64b5f6, #2196f3);
+.re revolution-summary {
+  --summary-scrollbar: linear-gradient(180deg, #ef5350, #d32f2f);
+  --summary-scrollbar-hover: linear-gradient(180deg, #f06292, #e53935);
+  --summary-scrollbar-dark: linear-gradient(180deg, #d32f2f, #b71c1c);
+  --summary-scrollbar-dark-hover: linear-gradient(180deg, #ef5350, #d32f2f);
 }
 
-body.dark-mode .cold-war-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1e88e5, #0d47a1);
+.world-geography-summary {
+  --summary-scrollbar: linear-gradient(180deg, #ff9800, #f57c00);
+  --summary-scrollbar-hover: linear-gradient(180deg, #ffb300, #ff8f00);
+  --summary-scrollbar-dark: linear-gradient(180deg, #ef6c00, #d84315);
+  --summary-scrollbar-dark-hover: linear-gradient(180deg, #ff8f00, #f57c00);
 }
 
-body.dark-mode .cold-war-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #42a5f5, #1976d2);
-}
-
-.revolution-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ef5350, #d32f2f);
-}
-
-.revolution-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #f06292, #e53935);
-}
-
-body.dark-mode .revolution-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #d32f2f, #b71c1c);
-}
-
-body.dark-mode .revolution-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ef5350, #d32f2f);
-}
-
-.world-geography-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff9800, #f57c00);
-}
-
-.world-geography-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ffb300, #ff8f00);
-}
-
-body.dark-mode .world-geography-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ef6c00, #d84315);
-}
-
-body.dark-mode .world-geography-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ff8f00, #f57c00);
-}
-
-.algerian-geography-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4caf50, #388e3c);
-}
-
-.algerian-geography-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #81c784, #4caf50);
-}
-
-body.dark-mode .algerian-geography-summary .summary-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #388e3c, #2e7d32);
-}
-
-body.dark-mode .algerian-geography-summary .summary-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #4caf50, #388e3c);
+.algerian-geography-summary {
+  --summary-scrollbar: linear-gradient(180deg, #4caf50, #388e3c);
+  --summary-scrollbar-hover: linear-gradient(180deg, #81c784, #4caf50);
+  --summary-scrollbar-dark: linear-gradient(180deg, #388e3c, #2e7d32);
+  --summary-scrollbar-dark-hover: linear-gradient(180deg, #4caf50, #388e3c);
 }
 
 /* تنسيق زر الإغلاق الثانوي */
 .secondary-close-btn {
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 14px 26px;
   font-size: 1rem;
@@ -1336,7 +1177,7 @@ body.dark-mode .algerian-geography-summary .summary-content::-webkit-scrollbar-t
   border-radius: 30px;
   color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 280px;
@@ -1360,7 +1201,15 @@ body.dark-mode .secondary-close-btn:hover {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* تنسيق استجابي */
+/* تحسين الأداء للأجهزة ذات الحركة المخفضة */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* تحسين الأداء للأجهزة المنخفضة الأداء */
 @media (max-width: 600px) {
   #settingsButton, #starsDisplay {
     font-size: 0.9rem;
@@ -1383,7 +1232,7 @@ body.dark-mode .secondary-close-btn:hover {
   }
   #countdownTimer .progress-ring {
     stroke-width: 3;
-    stroke-dasharray: 150.7; /* محيط دائرة أصغر للشاشات الصغيرة */
+    stroke-dasharray: 150.7;
   }
   #settingsMenu {
     width: 90%;
