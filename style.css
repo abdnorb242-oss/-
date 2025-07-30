@@ -113,30 +113,32 @@ body.dark-mode #starsDisplay {
 }
 
 /* تنسيق عداد الوقت العصري */
+/* تنسيق عداد الوقت العصري */
 #countdownTimer {
   position: fixed;
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  width: 90px;
-  height: 90px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px; /* مربع مستدير الحواف */
   display: none;
   align-items: center;
   justify-content: center;
   font-family: 'Cairo', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
   box-shadow: 
-    0 0 20px rgba(0, 188, 212, 0.4),
-    0 0 40px rgba(0, 188, 212, 0.2),
-    inset 0 0 10px rgba(255, 255, 255, 0.1); /* تأثير توهج نيون مع ظل داخلي */
+    0 0 15px rgba(0, 188, 212, 0.5),
+    0 0 30px rgba(0, 188, 212, 0.3),
+    inset 0 0 8px rgba(255, 255, 255, 0.1); /* توهج نيون مع ظل داخلي */
   z-index: 1000;
-  backdrop-filter: blur(10px); /* تأثير زجاجي قوي */
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px); /* تأثير زجاجي قوي */
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden; /* لضمان عدم التداخل مع التعبئة */
 }
 
 #countdownTimer.active {
@@ -144,90 +146,94 @@ body.dark-mode #starsDisplay {
 }
 
 #countdownTimer .time-text {
-  position: absolute;
-  text-align: center;
+  position: relative;
   z-index: 2;
-  text-shadow: 0 0 8px rgba(0, 188, 212, 0.6); /* توهج خفيف للنص */
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.7); /* توهج النص */
 }
 
-#countdownTimer svg {
+/* شريط التقدم الداخلي */
+#countdownTimer .progress-fill {
   position: absolute;
+  top: 0;
+  right: 0;
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg); /* بدء التقدم من الأعلى */
+  background: linear-gradient(to left, #00e5ff, #0288d1); /* تعبئة من اليمين إلى اليسار */
+  transform: scaleX(1); /* البدء ممتلئ */
+  transform-origin: right; /* دعم الاتجاه من اليمين إلى اليسار */
+  transition: transform 1s linear; /* انتقال سلس للتقدم */
+  z-index: 1;
+  opacity: 0.3; /* شفافية خفيفة لتأثير زجاجي */
 }
 
-#countdownTimer .progress-ring {
-  fill: none;
-  stroke: url(#neonGradient); /* تدرج لوني ديناميكي */
-  stroke-width: 6; /* خط أكثر سمكًا لمظهر بارز */
-  stroke-dasharray: 219.9; /* محيط الدائرة لنصف قطر 35 بكسل */
-  stroke-dashoffset: 0;
-  stroke-linecap: round; /* نهايات مستديرة */
-  transition: stroke-dashoffset 1s linear;
-  animation: neonPulse 2s ease-in-out infinite; /* تأثير نبض نيون */
-}
-
-/* تعريف التدرج اللوني */
-#countdownTimer svg defs linearGradient#neonGradient {
-  stop:nth-child(1) {
-    stop-color: #00e5ff;
-    stop-opacity: 1;
-  }
-  stop:nth-child(2) {
-    stop-color: #0288d1;
-    stop-opacity: 1;
-  }
-}
-
-body.dark-mode #countdownTimer {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 
-    0 0 20px rgba(2, 136, 209, 0.5),
-    0 0 40px rgba(2, 136, 209, 0.3),
-    inset 0 0 10px rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode #countdownTimer .progress-ring {
-  stroke: url(#neonGradientDark);
-}
-
-body.dark-mode #countdownTimer svg defs linearGradient#neonGradientDark {
-  stop:nth-child(1) {
-    stop-color: #42a5f5;
-    stop-opacity: 1;
-  }
-  stop:nth-child(2) {
-    stop-color: #01579b;
-    stop-opacity: 1;
-  }
+#countdownTimer.active .progress-fill {
+  transform: scaleX(0); /* التقدم يقل من اليمين إلى اليسار */
 }
 
 /* تأثير نبض النيون */
-@keyframes neonPulse {
+@keyframes neonGlow {
   0%, 100% {
-    filter: brightness(1);
+    box-shadow: 
+      0 0 15px rgba(0, 188, 212, 0.5),
+      0 0 30px rgba(0, 188, 212, 0.3),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
   }
   50% {
-    filter: brightness(1.3);
+    box-shadow: 
+      0 0 20px rgba(0, 188, 212, 0.7),
+      0 0 40px rgba(0, 188, 212, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.15);
+  }
+}
+
+#countdownTimer.active {
+  animation: neonGlow 2s ease-in-out infinite; /* نبض النيون عند التفعيل */
+}
+
+body.dark-mode #countdownTimer {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 0 15px rgba(2, 136, 209, 0.6),
+    0 0 30px rgba(2, 136, 209, 0.4),
+    inset 0 0 8px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode #countdownTimer .progress-fill {
+  background: linear-gradient(to left, #42a5f5, #01579b); /* تدرج داكن */
+}
+
+body.dark-mode #countdownTimer .time-text {
+  text-shadow: 0 0 10px rgba(2, 136, 209, 0.7);
+}
+
+body.dark-mode #countdownTimer.active {
+  animation: neonGlowDark 2s ease-in-out infinite;
+}
+
+/* تأثير نبض النيون للوضع الداكن */
+@keyframes neonGlowDark {
+  0%, 100% {
+    box-shadow: 
+      0 0 15px rgba(2, 136, 209, 0.6),
+      0 0 30px rgba(2, 136, 209, 0.4),
+      inset 0 0 8px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(2, 136, 209, 0.8),
+      0 0 40px rgba(2, 136, 209, 0.5),
+      inset 0 0 10px rgba(255, 255, 255, 0.1);
   }
 }
 
 /* تحسين التوافق مع الشاشات الصغيرة */
 @media (max-width: 600px) {
   #countdownTimer {
-    width: 70px;
-    height: 70px;
-    font-size: 1rem;
-  }
-  #countdownTimer svg {
-    width: 100%;
-    height: 100%;
-  }
-  #countdownTimer .progress-ring {
-    stroke-width: 5;
-    stroke-dasharray: 169.6; /* محيط الدائرة لنصف قطر 27 بكسل */
+    width: 80px;
+    height: 80px;
+    font-size: 1.2rem;
+    border-radius: 16px;
   }
 }
 
