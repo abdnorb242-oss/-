@@ -2644,11 +2644,24 @@ window.showAlgerianRevolutionSummary = () => {
 const offlineOverlay = document.getElementById('offlineOverlay');
 
 function checkOnlineStatus() {
-  if (navigator.onLine) {
-    offlineOverlay.style.display = 'none';
-  } else {
-    offlineOverlay.style.display = 'flex';
+  // التحقق الأولي باستخدام navigator.onLine
+  if (!navigator.onLine) {
+    offlineOverlay.classList.add('active');
+    return;
   }
+
+  // تحقق إضافي باستخدام fetch لضمان الدقة
+  fetch('https://www.google.com/favicon.ico', {
+    method: 'HEAD',
+    mode: 'no-cors',
+    cache: 'no-store'
+  })
+    .then(() => {
+      offlineOverlay.classList.remove('active');
+    })
+    .catch(() => {
+      offlineOverlay.classList.add('active');
+    });
 }
 
 function retryConnection() {
@@ -2656,8 +2669,13 @@ function retryConnection() {
 }
 
 // تحقق من حالة الاتصال عند تحميل الصفحة
-window.addEventListener('load', checkOnlineStatus);
+window.addEventListener('load', () => {
+  checkOnlineStatus();
+});
 
 // تحديث الحالة عند تغيير حالة الاتصال
 window.addEventListener('online', checkOnlineStatus);
 window.addEventListener('offline', checkOnlineStatus);
+
+// تحقق دوري كل 10 ثوانٍ للأجهزة المحمولة
+setInterval(checkOnlineStatus, 10000);
