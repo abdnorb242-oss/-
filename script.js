@@ -2640,3 +2640,24 @@ window.showAlgerianRevolutionSummary = () => {
   manageCountdown();
   updateButtonStates();
 });
+// التحقق من حالة الاتصال بالإنترنت
+const offlineOverlay = document.getElementById('offlineOverlay');
+
+function checkOnlineStatus() {
+  if (navigator.onLine) {
+    offlineOverlay.style.display = 'none';
+  } else {
+    offlineOverlay.style.display = 'flex';
+  }
+}
+
+function retryConnection() {
+  checkOnlineStatus();
+}
+
+// تحقق من حالة الاتصال عند تحميل الصفحة
+window.addEventListener('load', checkOnlineStatus);
+
+// تحديث الحالة عند تغيير حالة الاتصال
+window.addEventListener('online', checkOnlineStatus);
+window.addEventListener('offline', checkOnlineStatus);
