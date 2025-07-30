@@ -120,18 +120,20 @@ body.dark-mode #starsDisplay {
   transform: translateX(-50%);
   width: 80px;
   height: 80px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   display: none;
   align-items: center;
   justify-content: center;
   font-family: 'Cairo', sans-serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 188, 212, 0.3); /* إضافة توهج خفيف */
   z-index: 1000;
+  backdrop-filter: blur(8px); /* تأثير زجاجي عصري */
+  -webkit-backdrop-filter: blur(8px);
 }
 
 #countdownTimer.active {
@@ -141,32 +143,56 @@ body.dark-mode #starsDisplay {
 #countdownTimer .time-text {
   position: absolute;
   text-align: center;
+  z-index: 2; /* لضمان ظهور النص فوق الدائرة */
 }
 
 #countdownTimer svg {
+  position: absolute;
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg);
+  transform: rotate(-90deg); /* تدوير الدائرة لتبدأ من الأعلى */
 }
 
 #countdownTimer .progress-ring {
   fill: none;
   stroke: #00bcd4;
-  stroke-width: 4;
-  stroke-dasharray: 188.4;
-  stroke-dashoffset: 188.4;
-  transition: stroke-dashoffset 1s linear;
+  stroke-width: 5; /* زيادة سمك الخط لمظهر أكثر وضوحًا */
+  stroke-dasharray: 188.5; /* محيط الدائرة لحساب التقدم (2 * π * r) */
+  stroke-dashoffset: 0; /* البدء من الصفر */
+  stroke-linecap: round; /* جعل الأطراف مستديرة لمظهر أنيق */
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease; /* انتقال سلس */
+}
+
+#countdownTimer.active .progress-ring {
+  stroke-dashoffset: 188.5; /* إعادة تعيين التقدم عند التفعيل */
 }
 
 body.dark-mode #countdownTimer {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(2, 136, 209, 0.3);
 }
 
 body.dark-mode #countdownTimer .progress-ring {
-  stroke: #0288d1;
+  stroke: #0288d1; /* لون أغمق للوضع الداكن */
 }
 
+/* تحسين التوافق مع الشاشات الصغيرة */
+@media (max-width: 600px) {
+  #countdownTimer {
+    width: 60px;
+    height: 60px;
+    font-size: 1rem;
+  }
+  #countdownTimer svg {
+    width: 100%;
+    height: 100%;
+  }
+  #countdownTimer .progress-ring {
+    stroke-width: 4;
+    stroke-dasharray: 150.8; /* تعديل المحيط للشاشات الصغيرة */
+  }
+}
 /* تأثير الوميض لأيقونة النجمة */
 @keyframes twinkle {
   0%, 100% { opacity: 1; transform: scale(1); }
