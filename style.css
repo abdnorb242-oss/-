@@ -118,22 +118,25 @@ body.dark-mode #starsDisplay {
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: none;
   align-items: center;
   justify-content: center;
   font-family: 'Cairo', sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.3rem;
+  font-weight: 700;
   color: #fff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 188, 212, 0.3); /* إضافة توهج خفيف */
+  box-shadow: 
+    0 0 20px rgba(0, 188, 212, 0.4),
+    0 0 40px rgba(0, 188, 212, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.1); /* تأثير توهج نيون مع ظل داخلي */
   z-index: 1000;
-  backdrop-filter: blur(8px); /* تأثير زجاجي عصري */
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px); /* تأثير زجاجي قوي */
+  -webkit-backdrop-filter: blur(10px);
 }
 
 #countdownTimer.active {
@@ -143,45 +146,79 @@ body.dark-mode #starsDisplay {
 #countdownTimer .time-text {
   position: absolute;
   text-align: center;
-  z-index: 2; /* لضمان ظهور النص فوق الدائرة */
+  z-index: 2;
+  text-shadow: 0 0 8px rgba(0, 188, 212, 0.6); /* توهج خفيف للنص */
 }
 
 #countdownTimer svg {
   position: absolute;
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg); /* تدوير الدائرة لتبدأ من الأعلى */
+  transform: rotate(-90deg); /* بدء التقدم من الأعلى */
 }
 
 #countdownTimer .progress-ring {
   fill: none;
-  stroke: #00bcd4;
-  stroke-width: 5; /* زيادة سمك الخط لمظهر أكثر وضوحًا */
-  stroke-dasharray: 188.5; /* محيط الدائرة لحساب التقدم (2 * π * r) */
-  stroke-dashoffset: 0; /* البدء من الصفر */
-  stroke-linecap: round; /* جعل الأطراف مستديرة لمظهر أنيق */
-  transition: stroke-dashoffset 1s linear, stroke 0.3s ease; /* انتقال سلس */
+  stroke: url(#neonGradient); /* تدرج لوني ديناميكي */
+  stroke-width: 6; /* خط أكثر سمكًا لمظهر بارز */
+  stroke-dasharray: 219.9; /* محيط الدائرة لنصف قطر 35 بكسل */
+  stroke-dashoffset: 0;
+  stroke-linecap: round; /* نهايات مستديرة */
+  transition: stroke-dashoffset 1s linear;
+  animation: neonPulse 2s ease-in-out infinite; /* تأثير نبض نيون */
 }
 
-#countdownTimer.active .progress-ring {
-  stroke-dashoffset: 188.5; /* إعادة تعيين التقدم عند التفعيل */
+/* تعريف التدرج اللوني */
+#countdownTimer svg defs linearGradient#neonGradient {
+  stop:nth-child(1) {
+    stop-color: #00e5ff;
+    stop-opacity: 1;
+  }
+  stop:nth-child(2) {
+    stop-color: #0288d1;
+    stop-opacity: 1;
+  }
 }
 
 body.dark-mode #countdownTimer {
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(2, 136, 209, 0.3);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 0 20px rgba(2, 136, 209, 0.5),
+    0 0 40px rgba(2, 136, 209, 0.3),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 body.dark-mode #countdownTimer .progress-ring {
-  stroke: #0288d1; /* لون أغمق للوضع الداكن */
+  stroke: url(#neonGradientDark);
+}
+
+body.dark-mode #countdownTimer svg defs linearGradient#neonGradientDark {
+  stop:nth-child(1) {
+    stop-color: #42a5f5;
+    stop-opacity: 1;
+  }
+  stop:nth-child(2) {
+    stop-color: #01579b;
+    stop-opacity: 1;
+  }
+}
+
+/* تأثير نبض النيون */
+@keyframes neonPulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
 }
 
 /* تحسين التوافق مع الشاشات الصغيرة */
 @media (max-width: 600px) {
   #countdownTimer {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     font-size: 1rem;
   }
   #countdownTimer svg {
@@ -189,10 +226,11 @@ body.dark-mode #countdownTimer .progress-ring {
     height: 100%;
   }
   #countdownTimer .progress-ring {
-    stroke-width: 4;
-    stroke-dasharray: 150.8; /* تعديل المحيط للشاشات الصغيرة */
+    stroke-width: 5;
+    stroke-dasharray: 169.6; /* محيط الدائرة لنصف قطر 27 بكسل */
   }
 }
+
 /* تأثير الوميض لأيقونة النجمة */
 @keyframes twinkle {
   0%, 100% { opacity: 1; transform: scale(1); }
