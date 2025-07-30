@@ -1265,3 +1265,68 @@ body.dark-mode .secondary-close-btn:hover {
     min-height: 180px;
   }
 }
+/* تنسيق طبقة التمويه عند انقطاع الإنترنت */
+.offline-popup {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(33, 150, 243, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  padding: 30px 25px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  color: #fff;
+}
+
+body.dark-mode .offline-popup {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(33, 150, 243, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.offline-popup h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.offline-popup p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+/* زر إعادة المحاولة (مطابق لأسلوب .retry-btn الحالي) */
+.offline-popup .retry-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 14px 26px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 280px;
+  text-align: center;
+  display: inline-block;
+  font-family: 'Cairo', sans-serif;
+}
+
+.offline-popup .retry-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .offline-popup .retry-btn {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .offline-popup .retry-btn:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
