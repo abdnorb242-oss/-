@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TIME_LIMIT = 15; // مدة الكويز بالثواني
   const RESET_INTERVAL = 30 * 60; // 30 دقيقة لإعادة تعيين النجوم
-  const MAX_STARS = 10; // الحد الأقصى للنجوم
+ const MAX_STARS = 3; // ✅ عدد النجوم عند أول دخول
+ const FIRST_TIME_KEY = 'isFirstTime'; // ✅ مفتاح لتحديد أول دخول
   let timer;
   let timeLeft = TIME_LIMIT;
   let quizData = [];
@@ -88,6 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
       starsDisplay.className = 'stars-display glass-effect';
       document.body.appendChild(starsDisplay);
     }
+      // ✅ إذا كان أول دخول، يعيّن 3 نجوم
+  const isFirstTime = localStorage.getItem(FIRST_TIME_KEY);
+  if (!isFirstTime) {
+    stars = 3;
+    localStorage.setItem('quizStars', stars);
+    localStorage.setItem(FIRST_TIME_KEY, 'false');
+  }
     starsDisplay.innerHTML = `🌟 النجوم: ${stars}`;
     localStorage.setItem('quizStars', stars);
     localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
