@@ -8,6 +8,10 @@
   --color-geography: #ff9800;
   --padding-standard: 12px 20px;
   --border-radius-standard: 20px;
+  --neon-glow-color: #00e5ff;
+  --neon-glow-dark: #0288d1;
+  --water-color-light: #4dd0e1;
+  --water-color-dark: #0288d1;
 }
 
 html {
@@ -113,127 +117,153 @@ body.dark-mode #starsDisplay {
 }
 
 /* تنسيق عداد الوقت العصري */
-/* تنسيق عداد الوقت العصري */
 #countdownTimer {
   position: fixed;
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px; /* مربع مستدير الحواف */
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(0, 229, 255, 0.1));
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
   display: none;
   align-items: center;
   justify-content: center;
   font-family: 'Cairo', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #fff;
   box-shadow: 
-    0 0 15px rgba(0, 188, 212, 0.5),
-    0 0 30px rgba(0, 188, 212, 0.3),
-    inset 0 0 8px rgba(255, 255, 255, 0.1); /* توهج نيون مع ظل داخلي */
+    0 0 20px rgba(0, 229, 255, 0.6),
+    0 0 40px rgba(0, 229, 255, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.15);
   z-index: 1000;
-  backdrop-filter: blur(12px); /* تأثير زجاجي قوي */
-  -webkit-backdrop-filter: blur(12px);
-  overflow: hidden; /* لضمان عدم التداخل مع التعبئة */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #countdownTimer.active {
   display: flex;
+  animation: pulseGlow 1.5s ease-in-out infinite;
 }
 
+#countdownTimer:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 
+    0 0 30px rgba(0, 229, 255, 0.8),
+    0 0 60px rgba(0, 229, 255, 0.5),
+    inset 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+/* تنسيق النص */
 #countdownTimer .time-text {
   position: relative;
   z-index: 2;
-  text-shadow: 0 0 10px rgba(0, 188, 212, 0.7); /* توهج النص */
+  text-shadow: 
+    0 0 5px rgba(0, 229, 255, 0.8),
+    0 0 10px rgba(0, 229, 255, 0.6);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
 }
 
-/* شريط التقدم الداخلي */
-#countdownTimer .progress-fill {
+/* تأثير الماء المتدفق */
+#countdownTimer .water-fill {
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(to left, #00e5ff, #0288d1); /* تعبئة من اليمين إلى اليسار */
-  transform: scaleX(1); /* البدء ممتلئ */
-  transform-origin: right; /* دعم الاتجاه من اليمين إلى اليسار */
-  transition: transform 1s linear; /* انتقال سلس للتقدم */
+  height: 0%;
+  background: linear-gradient(180deg, var(--water-color-light), var(--water-color-dark));
+  clip-path: polygon(0% 100%, 100% 100%, 100% 90%, 95% 95%, 90% 90%, 85% 95%, 80% 90%, 75% 95%, 70% 90%, 65% 95%, 60% 90%, 55% 95%, 50% 90%, 45% 95%, 40% 90%, 35% 95%, 30% 90%, 25% 95%, 20% 90%, 15% 95%, 10% 90%, 5% 95%, 0% 90%);
   z-index: 1;
-  opacity: 0.3; /* شفافية خفيفة لتأثير زجاجي */
+  transition: height 30s linear;
+  animation: waterRipple 2s ease-in-out infinite;
 }
 
-#countdownTimer.active .progress-fill {
-  transform: scaleX(0); /* التقدم يقل من اليمين إلى اليسار */
+#countdownTimer.active .water-fill {
+  height: 100%;
+}
+
+/* تأثير تموج الماء */
+@keyframes waterRipple {
+  0%, 100% {
+    clip-path: polygon(0% 100%, 100% 100%, 100% 90%, 95% 95%, 90% 90%, 85% 95%, 80% 90%, 75% 95%, 70% 90%, 65% 95%, 60% 90%, 55% 95%, 50% 90%, 45% 95%, 40% 90%, 35% 95%, 30% 90%, 25% 95%, 20% 90%, 15% 95%, 10% 90%, 5% 95%, 0% 90%);
+  }
+  50% {
+    clip-path: polygon(0% 100%, 100% 100%, 100% 92%, 95% 97%, 90% 92%, 85% 97%, 80% 92%, 75% 97%, 70% 92%, 65% 97%, 60% 92%, 55% 97%, 50% 92%, 45% 97%, 40% 92%, 35% 97%, 30% 92%, 25% 97%, 20% 92%, 15% 97%, 10% 92%, 5% 97%, 0% 92%);
+  }
 }
 
 /* تأثير نبض النيون */
-@keyframes neonGlow {
+@keyframes pulseGlow {
   0%, 100% {
     box-shadow: 
-      0 0 15px rgba(0, 188, 212, 0.5),
-      0 0 30px rgba(0, 188, 212, 0.3),
-      inset 0 0 8px rgba(255, 255, 255, 0.1);
+      0 0 20px rgba(0, 229, 255, 0.6),
+      0 0 40px rgba(0, 229, 255, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.15);
   }
   50% {
     box-shadow: 
-      0 0 20px rgba(0, 188, 212, 0.7),
-      0 0 40px rgba(0, 188, 212, 0.4),
-      inset 0 0 10px rgba(255, 255, 255, 0.15);
+      0 0 30px rgba(0, 229, 255, 0.8),
+      0 0 60px rgba(0, 229, 255, 0.5),
+      inset 0 0 15px rgba(255, 255, 255, 0.2);
   }
 }
 
-#countdownTimer.active {
-  animation: neonGlow 2s ease-in-out infinite; /* نبض النيون عند التفعيل */
-}
-
+/* الوضع الداكن */
 body.dark-mode #countdownTimer {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(2, 136, 209, 0.2));
+  border: 2px solid rgba(255, 255, 255, 0.25);
   box-shadow: 
-    0 0 15px rgba(2, 136, 209, 0.6),
-    0 0 30px rgba(2, 136, 209, 0.4),
-    inset 0 0 8px rgba(255, 255, 255, 0.05);
+    0 0 20px rgba(2, 136, 209, 0.7),
+    0 0 40px rgba(2, 136, 209, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode #countdownTimer .progress-fill {
-  background: linear-gradient(to left, #42a5f5, #01579b); /* تدرج داكن */
+body.dark-mode #countdownTimer .water-fill {
+  background: linear-gradient(180deg, var(--water-color-dark), #01579b);
 }
 
 body.dark-mode #countdownTimer .time-text {
-  text-shadow: 0 0 10px rgba(2, 136, 209, 0.7);
+  text-shadow: 
+    0 0 5px rgba(2, 136, 209, 0.8),
+    0 0 10px rgba(2, 136, 209, 0.6);
 }
 
 body.dark-mode #countdownTimer.active {
-  animation: neonGlowDark 2s ease-in-out infinite;
+  animation: pulseGlowDark 1.5s ease-in-out infinite;
 }
 
 /* تأثير نبض النيون للوضع الداكن */
-@keyframes neonGlowDark {
+@keyframes pulseGlowDark {
   0%, 100% {
     box-shadow: 
-      0 0 15px rgba(2, 136, 209, 0.6),
-      0 0 30px rgba(2, 136, 209, 0.4),
-      inset 0 0 8px rgba(255, 255, 255, 0.05);
+      0 0 20px rgba(2, 136, 209, 0.7),
+      0 0 40px rgba(2, 136, 209, 0.5),
+      inset 0 0 10px rgba(255, 255, 255, 0.1);
   }
   50% {
     box-shadow: 
-      0 0 20px rgba(2, 136, 209, 0.8),
-      0 0 40px rgba(2, 136, 209, 0.5),
-      inset 0 0 10px rgba(255, 255, 255, 0.1);
+      0 0 30px rgba(2, 136, 209, 0.9),
+      0 0 60px rgba(2, 136, 209, 0.6),
+      inset 0 0 15px rgba(255, 255, 255, 0.15);
   }
 }
 
 /* تحسين التوافق مع الشاشات الصغيرة */
 @media (max-width: 600px) {
   #countdownTimer {
-    width: 80px;
-    height: 80px;
-    font-size: 1.2rem;
-    border-radius: 16px;
+    width: 90px;
+    height: 90px;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    box-shadow: 
+      0 0 15px rgba(0, 229, 255, 0.5),
+      0 0 30px rgba(0, 229, 255, 0.3),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -498,7 +528,7 @@ body.dark-mode .main-button:hover {
   background: rgba(0, 0, 0, 0.5);
 }
 
-//* تأثير زجاجي */
+/* تأثير زجاجي */
 .glass-effect {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -613,7 +643,7 @@ body.dark-mode .colorful-popup {
   border-radius: 30px;
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 5032px 15px rgba(0, 188, 212, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
   width: 100%;
   max-width: 300px;
   font-family: 'Cairo', sans-serif;
@@ -844,7 +874,7 @@ body.dark-mode .next-btn:hover {
 
 /* زر إعادة المحاولة */
 .retry-btn {
-  background: rgba(255, 255, 255, 0.15 ‒‒);
+  background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 14px 26px;
   font-size: 1rem;
@@ -1104,7 +1134,7 @@ body.dark-mode .cold-war-summary {
 /* تصميم زجاجي لملخص الثورة الجزائرية */
 .revolution-summary {
   background: linear-gradient(135deg, rgba(239, 83, 80, 0.2), rgba(229, 115, 115, 0.2));
-  border: 1px solid RGBA(229, 115, 115, 0.35);
+  border: 1px solid rgba(229, 115, 115, 0.35);
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
@@ -1216,7 +1246,7 @@ body.dark-mode .summary-content::-webkit-scrollbar-thumb:hover {
   --summary-scrollbar-dark-hover: linear-gradient(180deg, #42a5f5, #1976d2);
 }
 
-.re revolution-summary {
+.revolution-summary {
   --summary-scrollbar: linear-gradient(180deg, #ef5350, #d32f2f);
   --summary-scrollbar-hover: linear-gradient(180deg, #f06292, #e53935);
   --summary-scrollbar-dark: linear-gradient(180deg, #d32f2f, #b71c1c);
@@ -1292,17 +1322,14 @@ body.dark-mode .secondary-close-btn:hover {
   }
   #countdownTimer {
     top: 120px;
-    width: 60px;
-    height: 60px;
-    font-size: 0.9rem;
-  }
-  #countdownTimer svg {
-    width: 100%;
-    height: 100%;
-  }
-  #countdownTimer .progress-ring {
-    stroke-width: 3;
-    stroke-dasharray: 150.7;
+    width: 90px;
+    height: 90px;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    box-shadow: 
+      0 0 15px rgba(0, 229, 255, 0.5),
+      0 0 30px rgba(0, 229, 255, 0.3),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
   }
   #settingsMenu {
     width: 90%;
@@ -1335,6 +1362,7 @@ body.dark-mode .secondary-close-btn:hover {
     min-height: 180px;
   }
 }
+
 /* تنسيق طبقة التمويه عند انقطاع الإنترنت */
 .offline-popup {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(33, 150, 243, 0.2));
