@@ -223,24 +223,93 @@ if (isNaN(stars)) {
       retryBtn.style.cursor = retryBtn.disabled ? 'not-allowed' : 'pointer';
     }
   }
-
-  // دالة لمحاكاة مشاهدة إعلان
-  window.watchAd = () => {
-    if (stars < MAX_STARS) {
-      alert('تمت محاكاة مشاهدة الإعلان! لقد ربحت 3 نجوم.');
-      stars = Math.min(MAX_STARS, stars + 3);
-      lockoutUntil = 0;
-      localStorage.setItem('quizStars', stars);
-      localStorage.setItem('lockoutUntil', lockoutUntil);
-      localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
-      localStorage.removeItem('starsResetStartTime');
-      updateStarsDisplay();
-      closeAllPopups();
-      manageCountdown();
-      updateButtonStates();
-      playClickSound();
+ // دالة لمحاكاة مشاهدة إعلان
+// // دالة لمشاهدة الإعلان وكسب النجوم
+// ضع هذا في script.js بعد تعريف المتغيرات والدوال الأساسية
+window.watchAd = function () {
+  try {
+    // تحقق من وجود المتغيرات الأساسية
+    if (typeof stars === 'undefined' || typeof MAX_STARS === 'undefined') {
+      console.error('watchAd: المتغيرات stars أو MAX_STARS غير معرفة');
+      alert('حدث خطأ داخلي. حاول مرة أخرى.');
+      return;
     }
-  };
+    if (stars >= MAX_STARS) {
+      alert('لديك الحد الأقصى من النجوم بالفعل.');
+      return;
+    }
+    // منع الضغطة المتكررة
+    if (window._watchAdRunning) return;
+    window._watchAdRunning = true;
+
+    // إنشـاء حاوية الإعلان إن لم تكن موجودة
+    var containerId = 'nativeAdContainer';
+    var container = document.getElementById(containerId);
+    if (!container) {
+      container = document.createElement('div');
+      container.id = containerId;
+      container.style.textAlign = 'center';
+      container.style.margin = '20px 0';
+      // ضع الحاوية قبل نهاية body
+      document.body.appendChild(container);
+    }
+
+    // --- أدخل atOptions كسكريبت نصي (إذا مطلوب) ---
+    var optionsScript = document.createElement('script');
+    optionsScript.type = 'text/javascript';
+    // غيّر قيمة 'key' إذا كان لك رمز مختلف
+    optionsScript.text = "atOptions = { 'key' : '7d8af0e76e8a7b70b38853aca2a1d29a', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };";
+    container.appendChild(optionsScript);
+
+    // --- حمّل سكربت الإعلان نفسه ---
+    var invokeScript = document.createElement('script');
+    invokeScript.type = 'text/javascript';
+    invokeScript.async = true;
+    invokeScript.setAttribute('data-cfasync', 'false');
+    invokeScript.src = '//pl27383567.profitableratecpm.com/7d8af0e76e8a7b70b38853aca2a1d29a/invoke.js';
+    container.appendChild(invokeScript);
+
+    // اختياري: إظهار رسالة للمستخدم للتأكيد
+    // alert('تم تشغيل الإعلان، انتظر حتى انتهاء المشاهدة...');
+
+    // منح المكافأة بعد 20 ثانية (20000 ms)
+    setTimeout(function () {
+      try {
+        stars = Math.min(MAX_STARS, Number(stars) + 3);
+        lockoutUntil = 0;
+
+        if (typeof STORAGE_KEY !== 'undefined') {
+          try {
+            localStorage.setItem('quizStars', String(stars));
+            localStorage.setItem('lockoutUntil', String(lockoutUntil));
+            localStorage.setItem(STORAGE_KEY, btoa(String(stars) + '|' + String(lockoutUntil)));
+            localStorage.removeItem('starsResetStartTime');
+          } catch (e) {
+            console.warn('localStorage error:', e);
+          }
+        }
+
+        if (typeof updateStarsDisplay === 'function') updateStarsDisplay();
+        if (typeof closeAllPopups === 'function') closeAllPopups();
+        if (typeof manageCountdown === 'function') manageCountdown();
+        if (typeof updateButtonStates === 'function') updateButtonStates();
+        if (typeof playClickSound === 'function') playClickSound();
+
+        alert('🎉 تمت مشاهدة الإعلان! لقد ربحت 3 نجوم.');
+      } finally {
+        // إزالة الحاوية (تنظيف)
+        try { container.parentNode.removeChild(container); } catch (e) {}
+        window._watchAdRunning = false;
+      }
+    }, 20000);
+
+  } catch (err) {
+    console.error('watchAd unexpected error:', err);
+    window._watchAdRunning = false;
+  }
+};
+
+
    // التعديل المطلوب: ملخص الجغرافيا
 function closeAllPopups() {
   document.querySelectorAll('.popup-overlay').forEach(popup => popup.remove());
