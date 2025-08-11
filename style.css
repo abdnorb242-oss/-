@@ -1428,3 +1428,14 @@ body.dark-mode .offline-popup .retry-btn {
 body.dark-mode .offline-popup .retry-btn:hover {
   background: rgba(0, 0, 0, 0.4);
 }
+
+#fixed-banner {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: white;
+  padding: 5px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
