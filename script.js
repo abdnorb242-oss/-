@@ -224,89 +224,81 @@ if (isNaN(stars)) {
     }
   }
  // دالة لمحاكاة مشاهدة إعلان
-// // دالة لمشاهدة الإعلان وكسب النجوم
-// ضع هذا في script.js بعد تعريف المتغيرات والدوال الأساسية
-window.watchAd = function () {
-  try {
-    // تحقق من وجود المتغيرات الأساسية
-    if (typeof stars === 'undefined' || typeof MAX_STARS === 'undefined') {
-      console.error('watchAd: المتغيرات stars أو MAX_STARS غير معرفة');
-      alert('حدث خطأ داخلي. حاول مرة أخرى.');
-      return;
-    }
-    if (stars >= MAX_STARS) {
-      alert('لديك الحد الأقصى من النجوم بالفعل.');
-      return;
-    }
-    // منع الضغطة المتكررة
-    if (window._watchAdRunning) return;
-    window._watchAdRunning = true;
 
-    // إنشـاء حاوية الإعلان إن لم تكن موجودة
-    var containerId = 'nativeAdContainer';
-    var container = document.getElementById(containerId);
-    if (!container) {
-      container = document.createElement('div');
-      container.id = containerId;
-      container.style.textAlign = 'center';
-      container.style.margin = '20px 0';
-      // ضع الحاوية قبل نهاية body
-      document.body.appendChild(container);
-    }
+// دالة مشاهدة إعلان مع عداد وقت
+window.watchAd = () => {
+    if (stars < MAX_STARS) {
+        // 🔹 فتح نافذة الإعلان
+        let adWindow = window.open(
+            "https://www.profitableratecpm.com/iqsjviky6?key=f911fc91ce0af61916ad5c868fdeaf1e",
+            "_blank",
+            "width=800,height=600"
+        );
 
-    // --- أدخل atOptions كسكريبت نصي (إذا مطلوب) ---
-    var optionsScript = document.createElement('script');
-    optionsScript.type = 'text/javascript';
-    // غيّر قيمة 'key' إذا كان لك رمز مختلف
-    optionsScript.text = "atOptions = { 'key' : '7d8af0e76e8a7b70b38853aca2a1d29a', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };";
-    container.appendChild(optionsScript);
-
-    // --- حمّل سكربت الإعلان نفسه ---
-    var invokeScript = document.createElement('script');
-    invokeScript.type = 'text/javascript';
-    invokeScript.async = true;
-    invokeScript.setAttribute('data-cfasync', 'false');
-    invokeScript.src = '//pl27383567.profitableratecpm.com/7d8af0e76e8a7b70b38853aca2a1d29a/invoke.js';
-    container.appendChild(invokeScript);
-
-    // اختياري: إظهار رسالة للمستخدم للتأكيد
-    // alert('تم تشغيل الإعلان، انتظر حتى انتهاء المشاهدة...');
-
-    // منح المكافأة بعد 20 ثانية (20000 ms)
-    setTimeout(function () {
-      try {
-        stars = Math.min(MAX_STARS, Number(stars) + 3);
-        lockoutUntil = 0;
-
-        if (typeof STORAGE_KEY !== 'undefined') {
-          try {
-            localStorage.setItem('quizStars', String(stars));
-            localStorage.setItem('lockoutUntil', String(lockoutUntil));
-            localStorage.setItem(STORAGE_KEY, btoa(String(stars) + '|' + String(lockoutUntil)));
-            localStorage.removeItem('starsResetStartTime');
-          } catch (e) {
-            console.warn('localStorage error:', e);
-          }
+        if (!adWindow) {
+            alert("⚠️ الرجاء السماح بفتح النوافذ المنبثقة لمشاهدة الإعلان.");
+            return;
         }
 
-        if (typeof updateStarsDisplay === 'function') updateStarsDisplay();
-        if (typeof closeAllPopups === 'function') closeAllPopups();
-        if (typeof manageCountdown === 'function') manageCountdown();
-        if (typeof updateButtonStates === 'function') updateButtonStates();
-        if (typeof playClickSound === 'function') playClickSound();
+        // 🔹 إنشاء نافذة Popup للعداد
+        let countdownPopup = document.createElement("div");
+        countdownPopup.id = "adCountdownPopup";
+        countdownPopup.style.position = "fixed";
+        countdownPopup.style.top = "50%";
+        countdownPopup.style.left = "50%";
+        countdownPopup.style.transform = "translate(-50%, -50%)";
+        countdownPopup.style.padding = "20px";
+        countdownPopup.style.background = "#fff";
+        countdownPopup.style.border = "2px solid #333";
+        countdownPopup.style.borderRadius = "10px";
+        countdownPopup.style.textAlign = "center";
+        countdownPopup.style.fontSize = "18px";
+        countdownPopup.style.zIndex = "9999";
+        countdownPopup.innerHTML = `
+            ⏳ الرجاء الانتظار... 
+            <br> 
+            <span id="adTimer">10</span> ثانية
+        `;
+        document.body.appendChild(countdownPopup);
 
-        alert('🎉 تمت مشاهدة الإعلان! لقد ربحت 3 نجوم.');
-      } finally {
-        // إزالة الحاوية (تنظيف)
-        try { container.parentNode.removeChild(container); } catch (e) {}
-        window._watchAdRunning = false;
-      }
-    }, 20000);
+        // 🔹 مدة المشاهدة المطلوبة
+        let watchTime = 10;
+        let elapsed = 0;
 
-  } catch (err) {
-    console.error('watchAd unexpected error:', err);
-    window._watchAdRunning = false;
-  }
+        let adInterval = setInterval(() => {
+            // إذا أغلق الإعلان بكري
+            if (adWindow.closed) {
+                clearInterval(adInterval);
+                document.body.removeChild(countdownPopup);
+                alert("❌ يجب مشاهدة الإعلان كاملاً لربح النجوم.");
+                return;
+            }
+
+            elapsed++;
+            let remaining = watchTime - elapsed;
+            document.getElementById("adTimer").textContent = remaining;
+
+            if (elapsed >= watchTime) {
+                clearInterval(adInterval);
+                adWindow.close();
+                document.body.removeChild(countdownPopup);
+
+                // ✅ يكسب النجوم
+                alert('✅ انتهى الوقت! ربحت 3 نجوم 🎉');
+                stars = Math.min(MAX_STARS, stars + 3);
+                lockoutUntil = 0;
+                localStorage.setItem('quizStars', stars);
+                localStorage.setItem('lockoutUntil', lockoutUntil);
+                localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
+                localStorage.removeItem('starsResetStartTime');
+                updateStarsDisplay();
+                closeAllPopups();
+                manageCountdown();
+                updateButtonStates();
+                playClickSound();
+            }
+        }, 1000);
+    }
 };
 
 
@@ -2741,13 +2733,21 @@ function retryConnection() {
 }
 
 // تحقق من حالة الاتصال عند تحميل الصفحة
-window.addEventListener('load', () => {
-  checkOnlineStatus();
-});
+function checkOnlineStatus() {
+  if (navigator.onLine) {
+    document.getElementById("offline-overlay").style.display = "none";
+  } else {
+    document.getElementById("offline-overlay").style.display = "flex";
+  }
+}
 
-// تحديث الحالة عند تغيير حالة الاتصال
+// تحقق عند تحميل الصفحة
+window.addEventListener('load', checkOnlineStatus);
+
+// عند تغيير حالة الاتصال
 window.addEventListener('online', checkOnlineStatus);
 window.addEventListener('offline', checkOnlineStatus);
 
-// تحقق دوري كل 10 ثوانٍ للأجهزة المحمولة
+// تحقق كل 10 ثواني
 setInterval(checkOnlineStatus, 10000);
+
