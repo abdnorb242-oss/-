@@ -1364,6 +1364,20 @@ body.dark-mode .secondary-close-btn:hover {
 }
 
 /* تنسيق طبقة التمويه عند انقطاع الإنترنت */
+/* الخلفية */
+#offline-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* صندوق البوباب */
 .offline-popup {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(33, 150, 243, 0.2));
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1376,23 +1390,29 @@ body.dark-mode .secondary-close-btn:hover {
   color: #fff;
 }
 
-body.dark-mode .offline-popup {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(33, 150, 243, 0.2));
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
+/* العنوان */
 .offline-popup h2 {
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 15px;
   color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.offline-popup p {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 10px 0;
+/* الزر */
+.retry-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #2196f3;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.retry-btn:hover {
+  background: #1976d2;
 }
 
 /* زر إعادة المحاولة (مطابق لأسلوب .retry-btn الحالي) */
@@ -1428,4 +1448,7 @@ body.dark-mode .offline-popup .retry-btn {
 body.dark-mode .offline-popup .retry-btn:hover {
   background: rgba(0, 0, 0, 0.4);
 }
+
+
+
 
