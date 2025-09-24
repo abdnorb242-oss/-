@@ -1452,3 +1452,68 @@ body.dark-mode .offline-popup .retry-btn:hover {
 
 
 
+
+
+
+
+/* خلفية شفافة تغطي كامل الشاشة */
+#adOverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* إطار الإعلان */
+#adContent {
+  background: #111;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* iframe تاع الإعلان */
+#adFrame {
+  width: 100%;
+  height: 250px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* زر الغلق */
+#adCloseBtn {
+  display: none;
+  background: #f44336;
+  border: none;
+  padding: 10px 18px;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* عداد دائري */
+#circleTimer {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+}
