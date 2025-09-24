@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // العناصر الأساسية
+ // العناصر الأساسية
   const settingsMenu = document.getElementById('settingsMenu');
   const settingsButton = document.getElementById('settingsButton');
   const clickSound = document.getElementById('clickSound');
@@ -224,82 +223,44 @@ if (isNaN(stars)) {
     }
   }
  // دالة لمحاكاة مشاهدة إعلان
-
-// دالة مشاهدة إعلان مع عداد وقت
+// دالة لمحاكاة مشاهدة إعلان مع إعلان Smartlink
 window.watchAd = () => {
-    if (stars < MAX_STARS) {
-        // 🔹 فتح نافذة الإعلان
-        let adWindow = window.open(
-            "https://www.profitableratecpm.com/iqsjviky6?key=f911fc91ce0af61916ad5c868fdeaf1e",
-            "_blank",
-            "width=800,height=600"
-        );
+  if (stars < MAX_STARS) {
 
-        if (!adWindow) {
-            alert("⚠️ الرجاء السماح بفتح النوافذ المنبثقة لمشاهدة الإعلان.");
-            return;
-        }
+    // 👇 ضف كود إعلان Smartlink هنا
+    window.open('https://www.revenuecpmgate.com/ydsbh3m9z?key=669f57e0523fcc33454e4fbdf7953c0f', '_blank');
 
-        // 🔹 إنشاء نافذة Popup للعداد
-        let countdownPopup = document.createElement("div");
-        countdownPopup.id = "adCountdownPopup";
-        countdownPopup.style.position = "fixed";
-        countdownPopup.style.top = "50%";
-        countdownPopup.style.left = "50%";
-        countdownPopup.style.transform = "translate(-50%, -50%)";
-        countdownPopup.style.padding = "20px";
-        countdownPopup.style.background = "#fff";
-        countdownPopup.style.border = "2px solid #333";
-        countdownPopup.style.borderRadius = "10px";
-        countdownPopup.style.textAlign = "center";
-        countdownPopup.style.fontSize = "18px";
-        countdownPopup.style.zIndex = "9999";
-        countdownPopup.innerHTML = `
-            ⏳ الرجاء الانتظار... 
-            <br> 
-            <span id="adTimer">10</span> ثانية
-        `;
-        document.body.appendChild(countdownPopup);
+    // عداد محاكاة مدة مشاهدة الإعلان (10 ثوانٍ)
+    let countdown = 10;
+    const interval = setInterval(() => {
+      console.log(`⏳ الانتظار: ${countdown} ثانية...`);
+      countdown--;
+      if (countdown <= 0) {
+        clearInterval(interval);
 
-        // 🔹 مدة المشاهدة المطلوبة
-        let watchTime = 10;
-        let elapsed = 0;
+        // ✅ منح النجوم بعد "مشاهدة الإعلان"
+        alert('🎉 تمت مشاهدة الإعلان! لقد ربحت 3 نجوم.');
 
-        let adInterval = setInterval(() => {
-            // إذا أغلق الإعلان بكري
-            if (adWindow.closed) {
-                clearInterval(adInterval);
-                document.body.removeChild(countdownPopup);
-                alert("❌ يجب مشاهدة الإعلان كاملاً لربح النجوم.");
-                return;
-            }
+        stars = Math.min(MAX_STARS, stars + 3);
+        lockoutUntil = 0;
+        localStorage.setItem('quizStars', stars);
+        localStorage.setItem('lockoutUntil', lockoutUntil);
+        localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
+        localStorage.removeItem('starsResetStartTime');
 
-            elapsed++;
-            let remaining = watchTime - elapsed;
-            document.getElementById("adTimer").textContent = remaining;
+        updateStarsDisplay();
+        closeAllPopups();
+        manageCountdown();
+        updateButtonStates();
+        playClickSound();
+      }
+    }, 1000); // كل ثانية
 
-            if (elapsed >= watchTime) {
-                clearInterval(adInterval);
-                adWindow.close();
-                document.body.removeChild(countdownPopup);
-
-                // ✅ يكسب النجوم
-                alert('✅ انتهى الوقت! ربحت 3 نجوم 🎉');
-                stars = Math.min(MAX_STARS, stars + 3);
-                lockoutUntil = 0;
-                localStorage.setItem('quizStars', stars);
-                localStorage.setItem('lockoutUntil', lockoutUntil);
-                localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
-                localStorage.removeItem('starsResetStartTime');
-                updateStarsDisplay();
-                closeAllPopups();
-                manageCountdown();
-                updateButtonStates();
-                playClickSound();
-            }
-        }, 1000);
-    }
+  } else {
+    alert('🚫 لقد وصلت إلى الحد الأقصى من النجوم!');
+  }
 };
+
 
 
    // التعديل المطلوب: ملخص الجغرافيا
