@@ -224,43 +224,59 @@ if (isNaN(stars)) {
     }
   }
  // دالة لمحاكاة مشاهدة إعلان
-// دالة لمحاكاة مشاهدة إعلان مع إعلان Smartlink
+const adOverlay   = document.getElementById("adOverlay");
+const adFrame     = document.getElementById("adFrame");
+const adCloseBtn  = document.getElementById("adCloseBtn");
+const circleTimer = document.getElementById("circleTimer");
+
+let adTimer;
+
 window.watchAd = () => {
   if (stars < MAX_STARS) {
+    // 👇 عرض الإعلان داخل iframe
+    adFrame.src = "https://www.revenuecpmgate.com/ydsbh3m9z?key=669f57e0523fcc33454e4fbdf7953c0f";
+    adOverlay.style.display = "flex";
 
-    // 👇 ضف كود إعلان Smartlink هنا
-    window.open('https://www.revenuecpmgate.com/ydsbh3m9z?key=669f57e0523fcc33454e4fbdf7953c0f', '_blank');
-
-    // عداد محاكاة مدة مشاهدة الإعلان (10 ثوانٍ)
     let countdown = 10;
-    const interval = setInterval(() => {
-      console.log(`⏳ الانتظار: ${countdown} ثانية...`);
+    circleTimer.textContent = countdown;
+    adCloseBtn.style.display = "none";
+
+    adTimer = setInterval(() => {
       countdown--;
+      circleTimer.textContent = countdown;
       if (countdown <= 0) {
-        clearInterval(interval);
-
-        // ✅ منح النجوم بعد "مشاهدة الإعلان"
-        alert('🎉 تمت مشاهدة الإعلان! لقد ربحت 3 نجوم.');
-
-        stars = Math.min(MAX_STARS, stars + 3);
-        lockoutUntil = 0;
-        localStorage.setItem('quizStars', stars);
-        localStorage.setItem('lockoutUntil', lockoutUntil);
-        localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
-        localStorage.removeItem('starsResetStartTime');
-
-        updateStarsDisplay();
-        closeAllPopups();
-        manageCountdown();
-        updateButtonStates();
-        playClickSound();
+        clearInterval(adTimer);
+        circleTimer.textContent = "✔";
+        adCloseBtn.style.display = "inline-block";
       }
-    }, 1000); // كل ثانية
+    }, 1000);
+
+    // زر الإغلاق
+    adCloseBtn.onclick = () => {
+      adOverlay.style.display = "none";
+      adFrame.src = "";
+
+      // ✅ منح النجوم
+      alert("🎉 تمت مشاهدة الإعلان! ربحت 3 نجوم.");
+      stars = Math.min(MAX_STARS, stars + 3);
+      lockoutUntil = 0;
+      localStorage.setItem("quizStars", stars);
+      localStorage.setItem("lockoutUntil", lockoutUntil);
+      localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
+      localStorage.removeItem("starsResetStartTime");
+
+      updateStarsDisplay();
+      closeAllPopups();
+      manageCountdown();
+      updateButtonStates();
+      playClickSound();
+    };
 
   } else {
-    alert('🚫 لقد وصلت إلى الحد الأقصى من النجوم!');
+    alert("🚫 لقد وصلت إلى الحد الأقصى من النجوم!");
   }
 };
+
 
 
 
