@@ -1,4 +1,5 @@
- // العناصر الأساسية
+document.addEventListener('DOMContentLoaded', () => {
+  // العناصر الأساسية
   const settingsMenu = document.getElementById('settingsMenu');
   const settingsButton = document.getElementById('settingsButton');
   const clickSound = document.getElementById('clickSound');
