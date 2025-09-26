@@ -179,7 +179,7 @@ if (isNaN(stars)) {
           if (quizTitle && quizQuestion && quizOptions && quizFeedback) {
             quizTitle.textContent = '🚫 نفاد النجوم!';
             quizQuestion.textContent = `لا يمكنك اللعب حتى بعد ${timeLeft} دقيقة.`;
-            quizOptions.innerHTML = '<button class="ad-button">📺 شاهد إعلانًا لربح 3 نجوم</button>';
+            quizOptions.innerHTML = '<button class="ad-button">📺 💎 اعجابك أو تعليقك يفتح لك 3 نجوم مجانية!</button>';
             quizFeedback.textContent = '';
             quizPopup.style.display = 'flex';
             const adButton = quizOptions.querySelector('.ad-button');
@@ -224,61 +224,33 @@ if (isNaN(stars)) {
     }
   }
  // دالة لمحاكاة مشاهدة إعلان
-const adOverlay   = document.getElementById("adOverlay");
-const adFrame     = document.getElementById("adFrame");
-const adCloseBtn  = document.getElementById("adCloseBtn");
-const circleTimer = document.getElementById("circleTimer");
-
-let adTimer;
-
 window.watchAd = () => {
   if (stars < MAX_STARS) {
-    // 👇 عرض الإعلان داخل iframe
-    adFrame.src = "https://www.revenuecpmgate.com/ydsbh3m9z?key=669f57e0523fcc33454e4fbdf7953c0f";
-    adOverlay.style.display = "flex";
+    // فتح صفحتك فيسبوك مباشرة في المتصفح
+    window.open('https://www.facebook.com/people/BacGo/61577766223019/', '_blank');
 
-    let countdown = 10;
-    circleTimer.textContent = countdown;
-    adCloseBtn.style.display = "none";
-
-    adTimer = setInterval(() => {
-      countdown--;
-      circleTimer.textContent = countdown;
-      if (countdown <= 0) {
-        clearInterval(adTimer);
-        circleTimer.textContent = "✔";
-        adCloseBtn.style.display = "inline-block";
-      }
-    }, 1000);
-
-    // زر الإغلاق
-    adCloseBtn.onclick = () => {
-      adOverlay.style.display = "none";
-      adFrame.src = "";
-
-      // ✅ منح النجوم
-      alert("🎉 تمت مشاهدة الإعلان! ربحت 3 نجوم.");
+    // بعد 5 ثواني نعطي النجوم
+    setTimeout(() => {
+      alert('🎉 شكراً على دعمك لصفحتنا على فيسبوك! لقد ربحت 3 نجوم.');
       stars = Math.min(MAX_STARS, stars + 3);
+
       lockoutUntil = 0;
-      localStorage.setItem("quizStars", stars);
-      localStorage.setItem("lockoutUntil", lockoutUntil);
+      localStorage.setItem('quizStars', stars);
+      localStorage.setItem('lockoutUntil', lockoutUntil);
       localStorage.setItem(STORAGE_KEY, btoa(stars + lockoutUntil));
-      localStorage.removeItem("starsResetStartTime");
+      localStorage.removeItem('starsResetStartTime');
 
       updateStarsDisplay();
       closeAllPopups();
       manageCountdown();
       updateButtonStates();
       playClickSound();
-    };
-
+    }, 5000);
+    
   } else {
-    alert("🚫 لقد وصلت إلى الحد الأقصى من النجوم!");
+    alert('🚫 لقد وصلت إلى الحد الأقصى من النجوم!');
   }
 };
-
-
-
 
    // التعديل المطلوب: ملخص الجغرافيا
 function closeAllPopups() {
