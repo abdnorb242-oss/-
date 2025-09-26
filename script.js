@@ -226,13 +226,20 @@ if (isNaN(stars)) {
  // دالة لمحاكاة مشاهدة إعلان
 window.watchAd = () => {
   if (stars < MAX_STARS) {
-    // رابط صفحتك
-    const fbPageUrl = "fb://facewebmodal/f?href=https://www.facebook.com/people/BacGo/61577766223019/";
-    
-    // يفتح في تطبيق فيسبوك أو المتصفح
-    window.location.href = fbPageUrl;
+    // رابط عادي لصفحتك
+    const webUrl = "https://www.facebook.com/people/BacGo/61577766223019/";
+    // رابط خاص بفتح التطبيق
+    const appUrl = "fb://facewebmodal/f?href=" + webUrl;
 
-    // يعطي 3 نجوم مباشرة
+    // نحاول نفتح التطبيق
+    window.location.href = appUrl;
+
+    // إذا ماخدمش التطبيق خلال 500ms يفتح الرابط العادي في المتصفح
+    setTimeout(() => {
+      window.location.href = webUrl;
+    }, 500);
+
+    // يعطي 3 نجوم
     stars = Math.min(MAX_STARS, stars + 3);
     localStorage.setItem('quizStars', stars);
     updateStarsDisplay();
@@ -242,6 +249,7 @@ window.watchAd = () => {
     alert("عندك بالفعل العدد الأقصى من النجوم ⭐");
   }
 };
+
 
 
    // التعديل المطلوب: ملخص الجغرافيا
@@ -2692,5 +2700,6 @@ window.addEventListener('offline', checkOnlineStatus);
 
 // تحقق كل 10 ثواني
 setInterval(checkOnlineStatus, 10000);
+
 
 
